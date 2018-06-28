@@ -52,7 +52,7 @@ type Server struct {
 func New(bus *usb.USB, logWriter io.Writer, mw, dmw *memorywriter.MemoryWriter, logger, dlogger *log.Logger) (*Server, error) {
 	dlogger.Println("http - starting")
 	https := &http.Server{
-		Addr: "127.0.0.1:21325",
+		Addr: "127.0.0.1:21326",
 	}
 	s := &Server{
 		bus:      bus,

@@ -36,7 +36,7 @@ Compiling for officially supported platforms:
 
 ## API documentation
 
-`trezord-go` starts a HTTP server on `http://localhost:21325`. AJAX calls are only enabled from trezor.io subdomains.
+`safe-t-daemon` starts a HTTP server on `http://localhost:21326`. AJAX calls are only enabled from safe-t.io subdomains.
 
 Server supports following API calls:
 

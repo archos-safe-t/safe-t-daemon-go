@@ -60,8 +60,8 @@ RequestExecutionLevel admin
 
 SetCompressor bzip2
 
-Name "TREZOR Bridge"
-InstallDirRegKey HKLM Software\TREZOR\Bridge InstallDir
+Name "Safe-T Bridge"
+InstallDirRegKey HKLM Software\Safe-T\Bridge InstallDir
 
 ShowInstDetails hide
 ShowUninstDetails hide
@@ -73,34 +73,34 @@ Page instfiles
 
 DirText "Please select the installation folder."
 
-Section "TREZOR Bridge"
+Section "Safe-T Bridge"
   SectionIn RO
 
-  DetailPrint "Stopping previous TREZOR Bridge"
-  nsExec::Exec "taskkill /IM trezord.exe /F"
+  DetailPrint "Stopping previous Safe-T Bridge"
+  nsExec::Exec "taskkill /IM safe-t-daemon.exe /F"
 
   SetOutPath "$INSTDIR"
   ${If} ${RunningX64}
     ${If} ${IsWin7}
       File /oname=wdi-simple.exe wdi-simple-64b.exe
     ${EndIf}
-    File /oname=trezord.exe trezord-64b.exe
+    File /oname=safe-t-daemon.exe safe-t-daemon-64b.exe
     File /oname=devcon.exe devcon-64b.exe
   ${Else}
     ${If} ${IsWin7}
       File /oname=wdi-simple.exe wdi-simple-32b.exe
     ${EndIf}
-    File /oname=trezord.exe trezord-32b.exe
+    File /oname=safe-t-daemon.exe safe-t-daemon-32b.exe
     File /oname=devcon.exe devcon-32b.exe
   ${EndIf}
-  File "trezord.ico"
+  File "safe-t-daemon.ico"
 SectionEnd
 
 Section "Start Menu Shortcuts"
-  CreateDirectory "$SMPROGRAMS\TREZOR Bridge"
-  CreateShortCut "$SMPROGRAMS\TREZOR Bridge\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\Uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\TREZOR Bridge\TREZOR Bridge.lnk" "$INSTDIR\trezord.exe" "-l $\"%APPDATA%\TREZOR Bridge\trezord.log$\"" "$INSTDIR\trezord.ico" 0
-  CreateShortCut "$SMSTARTUP\TREZOR Bridge.lnk" "$INSTDIR\trezord.exe" "-l $\"%APPDATA%\TREZOR Bridge\trezord.log$\"" "$INSTDIR\trezord.ico" 0
+  CreateDirectory "$SMPROGRAMS\Safe-T Bridge"
+  CreateShortCut "$SMPROGRAMS\Safe-T Bridge\Uninstall.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\Uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\Safe-T Bridge\Safe-T Bridge.lnk" "$INSTDIR\safe-t-daemon.exe" "-l $\"%APPDATA%\Safe-T Bridge\safe-t-daemon.log$\"" "$INSTDIR\safe-t-daemon.ico" 0
+  CreateShortCut "$SMSTARTUP\Safe-T Bridge.lnk" "$INSTDIR\safe-t-daemon.exe" "-l $\"%APPDATA%\Safe-T Bridge\safe-t-daemon.log$\"" "$INSTDIR\safe-t-daemon.ico" 0
 SectionEnd
 
 Var CMDRESULT
@@ -116,7 +116,7 @@ Section "Check for connected devices"
   ${StrContains} $CONTAINS "No matching devices" $CMDRESULT
 
   ${DoWhile} $CONTAINS == ""
-    MessageBox MB_OK "Please disconnect TREZOR"
+    MessageBox MB_OK "Please disconnect Safe-T"
 
     nsExec::ExecToStack '"$INSTDIR\devcon.exe" find *vid_1209*'
     Pop $0
@@ -130,7 +130,7 @@ Section "Check for connected devices"
   ${StrContains} $CONTAINS "No matching devices" $CMDRESULT
 
   ${DoWhile} $CONTAINS == ""
-    MessageBox MB_OK "Please disconnect TREZOR"
+    MessageBox MB_OK "Please disconnect Safe-T"
 
     nsExec::ExecToStack '"$INSTDIR\devcon.exe" find *vid_534c*'
     Pop $0
@@ -145,32 +145,32 @@ Section "Uninstall previous drivers"
   nsExec::ExecToLog '"$INSTDIR\devcon.exe" removeall *vid_534c*'
   nsExec::ExecToLog '"$INSTDIR\devcon.exe" rescan'
   nsExec::ExecToLog '"$INSTDIR\devcon.exe" dp_find_delete "(Undefined Vendor)" libwdi'
-  nsExec::ExecToLog '"$INSTDIR\devcon.exe" dp_find_delete "SatoshiLabs" libwdi'
+  nsExec::ExecToLog '"$INSTDIR\devcon.exe" dp_find_delete "Archos" libwdi'
   nsExec::ExecToLog '"$INSTDIR\devcon.exe" rescan'
 SectionEnd
 
 Section "Install drivers"
   ${If} ${IsWin7}
   DetailPrint "Installing drivers"
-  nsExec::ExecToLog '"$INSTDIR\wdi-simple.exe" --name "TREZOR" --manufacturer "SatoshiLabs" --vid 0x1209 --pid 0x53C0 --progressbar=$HWNDPARENT'
-  nsExec::ExecToLog '"$INSTDIR\wdi-simple.exe" --name "TREZOR" --manufacturer "SatoshiLabs" --vid 0x1209 --pid 0x53C1 --iid 0 --progressbar=$HWNDPARENT'
+  nsExec::ExecToLog '"$INSTDIR\wdi-simple.exe" --name "Safe-T" --manufacturer "Archos" --vid 0x1209 --pid 0x53C0 --progressbar=$HWNDPARENT'
+  nsExec::ExecToLog '"$INSTDIR\wdi-simple.exe" --name "Safe-T" --manufacturer "Archos" --vid 0x1209 --pid 0x53C1 --iid 0 --progressbar=$HWNDPARENT'
   ${EndIf}
   nsExec::ExecToLog '"$INSTDIR\devcon.exe" rescan'
 SectionEnd
 
 Section "Uninstall"
-  ExecWait "taskkill /f /im trezord.exe"
+  ExecWait "taskkill /f /im safe-t-daemon.exe"
 
-  Delete /rebootok "$SMSTARTUP\TREZOR Bridge.lnk"
-  Delete /rebootok "$SMPROGRAMS\TREZOR Bridge\TREZOR Bridge.lnk"
-  Delete /rebootok "$SMPROGRAMS\TREZOR Bridge\Uninstall.lnk"
-  RMDir "$SMPROGRAMS\TREZOR Bridge"
+  Delete /rebootok "$SMSTARTUP\Safe-T Bridge.lnk"
+  Delete /rebootok "$SMPROGRAMS\Safe-T Bridge\Safe-T Bridge.lnk"
+  Delete /rebootok "$SMPROGRAMS\Safe-T Bridge\Uninstall.lnk"
+  RMDir "$SMPROGRAMS\Safe-T Bridge"
 
   RMDir /r /rebootok "$INSTDIR\usb_driver"
   Delete /rebootok "$INSTDIR\devcon.exe"
   Delete /rebootok "$INSTDIR\wdi-simple.exe"
-  Delete /rebootok "$INSTDIR\trezord.exe"
-  Delete /rebootok "$INSTDIR\trezord.ico"
+  Delete /rebootok "$INSTDIR\safe-t-daemon.exe"
+  Delete /rebootok "$INSTDIR\safe-t-daemon.ico"
   Delete /rebootok "$INSTDIR\Uninstall.exe"
   RMDir "$INSTDIR"
 SectionEnd
@@ -180,10 +180,10 @@ Section -post
 SectionEnd
 
 !define MUI_FINISHPAGE_RUN
-!define MUI_FINISHPAGE_RUN_TEXT "Start TREZOR Bridge"
+!define MUI_FINISHPAGE_RUN_TEXT "Start Safe-T Bridge"
 !define MUI_FINISHPAGE_RUN_FUNCTION "LaunchApplication"
 !insertmacro MUI_PAGE_FINISH
 
 Function LaunchApplication
-  ExecShell "" "$SMPROGRAMS\TREZOR Bridge\TREZOR Bridge.lnk"
+  ExecShell "" "$SMPROGRAMS\Safe-T Bridge\Safe-T Bridge.lnk"
 FunctionEnd

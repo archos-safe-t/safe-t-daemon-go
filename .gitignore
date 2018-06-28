@@ -1,4 +1,4 @@
-trezord-go
+safe-t-daemon-go
 release/installers/
 release/linux/privkey.asc
 release/linux/build/

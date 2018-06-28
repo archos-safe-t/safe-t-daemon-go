@@ -14,7 +14,7 @@ cd $(dirname $0)
 TARGET=$1
 VERSION=$(cat /release/build/VERSION)
 
-INSTALLER=trezor-bridge-$VERSION.pkg
+INSTALLER=safe-t-bridge-$VERSION.pkg
 
 # first, make uninstaller
 
@@ -39,7 +39,7 @@ cd ..
 
 rm -rf /release/build/flat-uninstall
 
-# second, make installer and add trezord and uninstaller
+# second, make installer and add safe-t-daemon and uninstaller
 
 rm -rf /release/build/flat-install
 
@@ -51,8 +51,8 @@ cd ..
 rm -r scripts
 cd payload
 
-cp /release/build/trezord Applications/Utilities/TREZOR\ Bridge/
-cp ../../../uninstall.pkg Applications/Utilities/TREZOR\ Bridge/
+cp /release/build/safe-t-daemon Applications/Utilities/Safe-T\ Bridge/
+cp ../../../uninstall.pkg Applications/Utilities/Safe-T\ Bridge/
 
 FILES=$(find . | wc -l)
 KBYTES=$(du -k -s . | cut -f 1)

@@ -5,11 +5,11 @@ import "html/template"
 type statusTemplateDevType int
 
 const (
-	typeT1     statusTemplateDevType = 0
-	typeT2     statusTemplateDevType = 1
-	typeT2Boot statusTemplateDevType = 2
-	typeSafeTmini   statusTemplateDevType = 3
-	typeSafeTminiBoot   statusTemplateDevType = 4
+	typeT1            statusTemplateDevType = 0
+	typeT2            statusTemplateDevType = 1
+	typeT2Boot        statusTemplateDevType = 2
+	typeSafeTmini     statusTemplateDevType = 3
+	typeSafeTminiBoot statusTemplateDevType = 4
 )
 
 type statusTemplateDevice struct {
@@ -36,7 +36,7 @@ const templateString = `
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>TREZOR Bridge status</title>
+  <title>Safe-T Bridge status</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
@@ -147,7 +147,7 @@ const templateString = `
   <div id="container">
     <div class="inner-container">
       <div class="heading">
-        <h1>TREZOR Bridge status</h1>
+        <h1>Safe-T Bridge status</h1>
         <span class="badge">Version: {{.Version}}</span>
       </div>
 
@@ -171,6 +171,14 @@ const templateString = `
 
         {{if eq .Type 2}}
           TREZOR Model T (bootloader)
+		{{end}}
+
+		{{if eq .Type 3}}
+          Safe-T mini
+		{{end}}
+
+		{{if eq .Type 4}}
+          Safe-T mini (bootloader)
         {{end}}
       </h3>
         <span class="session">

@@ -3,7 +3,7 @@
   minSpecVersion="1"
 >
   <!--displayed in the header-->
-  <title>TREZOR Bridge</title>
+  <title>Safe-T Bridge</title>
   <!--displayed on start, can be localized-->
   <welcome
     file="welcome.txt"
@@ -17,26 +17,26 @@
   />
 
   <pkg-ref
-    id="com.bitcointrezor.pkg.TREZORBridge.uninstall"
+    id="com.archos.pkg.SafeTBridge.uninstall"
   />
 
   <choices-outline>
     <line
-      choice="com.bitcointrezor.pkg.TREZORBridge.uninstall"
+      choice="com.archos.pkg.SafeTBridge.uninstall"
     />
   </choices-outline>
 
   <choice
-    id="com.bitcointrezor.pkg.TREZORBridge.uninstall"
+    id="com.archos.pkg.SafeTBridge.uninstall"
     visible="true"
-    title="Uninstall TREZOR Bridge"
+    title="Uninstall Safe-T Bridge"
   >
     <pkg-ref
-      id="com.bitcointrezor.pkg.TREZORBridge.uninstall"
+      id="com.archos.pkg.SafeTBridge.uninstall"
     />
   </choice>
   <pkg-ref
-    id="com.bitcointrezor.pkg.TREZORBridge.uninstall"
+    id="com.archos.pkg.SafeTBridge.uninstall"
     version="VERSION"
     onConclusion="none"
     installKBytes="0"

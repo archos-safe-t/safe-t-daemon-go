@@ -5,11 +5,11 @@ import (
 	"io"
 	"log"
 	"os"
+	"safe-t-daemon-go/memorywriter"
+	"safe-t-daemon-go/server"
+	"safe-t-daemon-go/usb"
 	"strconv"
 
-	"github.com/trezor/trezord-go/memorywriter"
-	"github.com/trezor/trezord-go/server"
-	"github.com/trezor/trezord-go/usb"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -41,8 +41,8 @@ func main() {
 	var withusb bool
 
 	flag.StringVar(&logfile, "l", "", "Log into a file, rotating after 5MB")
-	flag.Var(&ports, "e", "Use UDP port for emulator. Can be repeated for more ports. Example: trezord-go -e 21324 -e 21326")
-	flag.BoolVar(&withusb, "u", true, "Use USB devices. Can be disabled for testing environments. Example: trezord-go -e 21324 -u=false")
+	flag.Var(&ports, "e", "Use UDP port for emulator. Can be repeated for more ports. Example: safe-t-daemon-go -e 21324 -e 21326")
+	flag.BoolVar(&withusb, "u", true, "Use USB devices. Can be disabled for testing environments. Example: safe-t-daemon-go -e 21324 -u=false")
 	flag.Parse()
 
 	var lw io.Writer
@@ -64,7 +64,7 @@ func main() {
 	logger := log.New(logWriter, "", log.LstdFlags)
 	detailedLogger := log.New(detailedLogWriter, "details: ", log.LstdFlags)
 
-	logger.Println("trezord is starting.")
+	logger.Println("safe-t-daemon is starting.")
 
 	var bus []usb.Bus
 	if withusb {

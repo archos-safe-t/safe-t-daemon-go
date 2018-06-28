@@ -1,2 +1,2 @@
-systemctl stop trezord.service
-systemctl disable trezord.service
+systemctl stop safe-t-daemon.service
+systemctl disable safe-t-daemon.service

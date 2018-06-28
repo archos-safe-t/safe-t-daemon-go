@@ -4,10 +4,10 @@ package server
 
 import (
 	"fmt"
-	"github.com/trezor/trezord-go/usb"
 	"log"
 	"os"
 	"os/exec"
+	"safe-t-daemon-go/usb"
 	"strings"
 	"syscall"
 )

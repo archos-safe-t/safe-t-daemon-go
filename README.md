@@ -1,8 +1,6 @@
-# trezord-go
+# safe-t-daemon-go
 
-[![Build Status](https://travis-ci.org/trezor/trezord-go.svg?branch=master)](https://travis-ci.org/trezor/trezord-go) [![gitter](https://badges.gitter.im/trezor/community.svg)](https://gitter.im/trezor/community)
-
-TREZOR Communication Daemon aka TREZOR Bridge (written in Go)
+Safe-T Communication Daemon aka Safe-T Bridge (written in Go)
 
 **Only compatible with Chrome (version 53 or later) and Firefox (version 55 or later).**
 
@@ -11,9 +9,9 @@ status: [spec](https://w3c.github.io/webappsec-secure-contexts/#is-origin-trustw
 ## Install and run from source
 
 ```
-go get github.com/trezor/trezord-go
-go build github.com/trezor/trezord-go
-./trezord-go -h
+go get github.com/archos-safe-t/safe-t-daemon-go
+go build github.com/archos-safe-t/safe-t-daemon-go
+./safe-t-daemon-go -h
 ```
 
 ## Guide to compiling packages
@@ -36,28 +34,6 @@ Compiling for officially supported platforms:
 
 * `$GOPATH/bin/xgo -targets=windows/amd64,windows/386,darwin/amd64,linux/amd64,linux/386 .`
 
-## Emulator support
-
-Trezord supports emulators for both Trezor versions. However, you need to enable it manually; it is disabled by default. After enabling, services that work with emulator can work with all services that support trezord.
-
-To enable emulator, run trezord with a parameter `-e` followed by port, for every emulator with an enabled port
-
-`./trezord -e 21324`
-
-If you want to run this automatically on linux, do
-
-`sudo systemctl edit --full trezord.service`
-
-and edit the service file (and maybe restart the trezord service). On mac, you will need to edit
-
-`/Library/LaunchAgents/com.bitcointrezor.trezorBridge.trezord.plist`
-
-and edit the last `<string>` in the plist. (And also probably restart the pc.)
-
-You can disable all USB in order to run on some virtuaized environments, for example Travis
-
-`./trezord -e 21324 -u=false`
-
 ## API documentation
 
 `trezord-go` starts a HTTP server on `http://localhost:21325`. AJAX calls are only enabled from trezor.io subdomains.
@@ -71,11 +47,12 @@ Server supports following API calls:
 | `/listen` <br> POST | request body: previous, as JSON | like `enumerate` | Listen to changes and returns either on change or after 30 second timeout. Compares change from `previous` that is sent as a parameter. "Change" is both connecting/disconnecting and session change. |
 | `/acquire/PATH/PREVIOUS` <br> POST | `PATH`: path of device<br>`PREVIOUS`: previous session (or string "null") | {`session`:&nbsp;string} | Acquires the device at `PATH`. By "acquiring" the device, you are claiming the device for yourself.<br>Before acquiring, checks that the current session is `PREVIOUS`.<br>If two applications call `acquire` on a newly connected device at the same time, only one of them succeed. |
 | `/release/SESSION`<br>POST | `SESSION`: session to release | {} | Releases the device with the given session.<br>By "releasing" the device, you claim that you don't want to use the device anymore. |
-| `/call/SESSION`<br>POST | `SESSION`: session to call<br><br>request body: hexadecimal string | hexadecimal string | Both input and output are hexadecimal, encoded in following way:<br>first 2 bytes (4 characters in the hexadecimal) is the message type<br>next 4 bytes (8 in hex) is length of the data<br>the rest is the actual encoded protobuf data.<br>Protobuf messages are defined in [this protobuf file](https://github.com/trezor/trezor-common/blob/master/protob/messages.proto) and the app, calling trezord, should encode/decode it itself. |
+| `/call/SESSION`<br>POST | `SESSION`: session to call<br><br>request body: hexadecimal string | hexadecimal string | Both input and output are hexadecimal, encoded in following way:<br>first 2 bytes (4 characters in the hexadecimal) is the message type<br>next 4 bytes (8 in hex) is length of the data<br>the rest is the actual encoded protobuf data.<br>Protobuf messages are defined in [this protobuf file](https://github.com/archos-safe-t/safe-t-common/blob/master/protob/messages.proto) and the app, calling safe-t-daemon-go, should encode/decode it itself. |
 | `/post/SESSION`<br>POST | `SESSION`: session to call<br><br>request body: hexadecimal string | 0 | Similar to `call`, just doesn't read response back. Usable mainly for debug link, currently working only with emulator. |
 
 ## Copyright
 
+* (C) 2018 Archos S.A.
 * (C) 2018 Karel Bilek, Jan Pochyla
 * CORS Copyright (c) 2013 The Gorilla Handlers Authors, [BSD license](https://github.com/gorilla/handlers/blob/master/LICENSE)
 * Licensed under LGPLv3

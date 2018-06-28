@@ -1,11 +1,11 @@
 [Unit]
-Description=TREZOR Bridge
+Description=Safe-T Bridge
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/trezord
-User=trezord
+ExecStart=/usr/bin/safe-t-daemon
+User=safe-t-daemon
 
 [Install]
 WantedBy=multi-user.target

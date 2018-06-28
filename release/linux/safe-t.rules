@@ -1,0 +1,9 @@
+# Archos Safe-t Hardware Wallet
+# https://safe-t.io/
+# Put this file into /usr/lib/udev/rules.d
+
+# Safe-T mini
+SUBSYSTEM=="usb", ATTR{idVendor}=="0e79", ATTR{idProduct}=="6001", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="safe-t%n"
+SUBSYSTEM=="usb", ATTR{idVendor}=="0e79", ATTR{idProduct}=="6000", MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl", SYMLINK+="safe-t%n"
+KERNEL=="hidraw*", ATTRS{idVendor}=="0e79", ATTRS{idProduct}=="6001",  MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"
+KERNEL=="hidraw*", ATTRS{idVendor}=="0e79", ATTRS{idProduct}=="6000",  MODE="0660", GROUP="plugdev", TAG+="uaccess", TAG+="udev-acl"

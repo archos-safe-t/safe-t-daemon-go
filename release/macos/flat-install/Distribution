@@ -3,7 +3,7 @@
   minSpecVersion="1"
 >
   <!--displayed in the header-->
-  <title>TREZOR Bridge</title>
+  <title>Safe-T Bridge</title>
   <!--displayed on start, can be localized-->
   <welcome
     file="welcome.txt"
@@ -17,26 +17,26 @@
   />
 
   <pkg-ref 
-    id="com.bitcointrezor.pkg.TREZORBridge"
+    id="com.archos.pkg.SafeTBridge"
   />
   
   <choices-outline>
     <line 
-      choice="com.bitcointrezor.pkg.TREZORBridge"
+      choice="com.archos.pkg.SafeTBridge"
     />
   </choices-outline>
   
   <choice 
-    id="com.bitcointrezor.pkg.TREZORBridge"
+    id="com.archos.pkg.SafeTBridge"
     visible="true"
-    title="Install TREZOR Bridge"
+    title="Install Safe-T Bridge"
   >
     <pkg-ref
-      id="com.bitcointrezor.pkg.TREZORBridge"
+      id="com.archos.pkg.SafeTBridge"
     />
   </choice>
   <pkg-ref
-    id="com.bitcointrezor.pkg.TREZORBridge"
+    id="com.archos.pkg.SafeTBridge"
     version="VERSION"
     onConclusion="none"
     installKBytes="KBYTES"

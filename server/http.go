@@ -17,9 +17,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/trezor/trezord-go/memorywriter"
-	"github.com/trezor/trezord-go/usb"
-	"github.com/trezor/trezord-go/wire"
+	"safe-t-daemon-go/memorywriter"
+	"safe-t-daemon-go/usb"
+	"safe-t-daemon-go/wire"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"

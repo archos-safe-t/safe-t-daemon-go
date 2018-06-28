@@ -1,2 +1,2 @@
-systemctl enable trezord.service
-systemctl start trezord.service
+systemctl enable safe-t-daemon.service
+systemctl start safe-t-daemon.service

@@ -109,7 +109,7 @@ func (s *Server) logRequest(handler http.Handler) http.Handler {
 }
 
 func corsValidator() (OriginValidator, error) {
-	tregex, err := regexp.Compile(`^https://([[:alnum:]\-_]+\.)*trezor\.io$`)
+	tregex, err := regexp.Compile(`^https://([[:alnum:]\-_]+\.)*safe\-t\.io$`)
 	if err != nil {
 		return nil, err
 	}

@@ -6,4 +6,5 @@ release/macos/cert0*
 release/macos/key.pem
 release/macos/build/
 release/windows/authenticode.*
+release/windows/archos_authenticode*
 release/windows/build/

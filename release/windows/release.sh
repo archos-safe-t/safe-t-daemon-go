@@ -14,13 +14,29 @@ cd /release/build
 cp /release/safe-t-daemon.nsis safe-t-daemon.nsis
 cp /release/safe-t-daemon.ico safe-t-daemon.ico
 
-SIGNKEY=/release/authenticode
+CODESIGN='osslsigncode'
+SIGNKEY="../archos_authenticode.p12"
+SIGNPSWD="../archos_authenticode_pass.txt"
+SIGN=true
 
-if [ -r $SIGNKEY.der ]; then
+if [ -z $CODESIGN ]; then
+  echo "no sign tool detected. Skipping signing"
+  SIGN=false
+fi
+if [ ! -f $SIGNKEY ]; then
+  echo "no cert file found. Skipping signing "
+  SIGN=false
+fi
+if [ ! -f $SIGNPSWD ]; then
+  echo "no password file found. Skipping signing"
+  SIGN=false
+fi
+
+if [ $SIGN = true ]; then
     for BINARY in {safe-t-daemon,devcon,wdi-simple}-{32b,64b}.exe ; do
         mv $BINARY $BINARY.unsigned
-        osslsigncode sign -certs $SIGNKEY.p7b -key $SIGNKEY.der -n "Safe-T Bridge" -i "https://safe-t.io/" -h sha256 -t "http://timestamp.comodoca.com?td=sha256" -in $BINARY.unsigned -out $BINARY
-        osslsigncode verify -in $BINARY
+        $CODESIGN sign -pkcs12 $SIGNKEY -readpass $SIGNPSWD -n "Safe-T Bridge" -i "https://safe-t.io/" -h sha2 -t http://timestamp.digicert.com -in $BINARY.unsigned -out $BINARY
+        $CODESIGN verify -in $BINARY
     done
 fi
 
@@ -30,8 +46,9 @@ else
     makensis -X"OutFile $INSTALLER" -X'InstallDir "$PROGRAMFILES64\Safe-T Bridge"' safe-t-daemon.nsis
 fi
 
-if [ -r $SIGNKEY.der ]; then
+if [ $SIGN = true ]; then
     mv $INSTALLER $INSTALLER.unsigned
-    osslsigncode sign -certs $SIGNKEY.p7b -key $SIGNKEY.der -n "Safe-T Bridge" -i "https://safe-t.io/" -h sha256 -t "http://timestamp.comodoca.com?td=sha256" -in $INSTALLER.unsigned -out $INSTALLER
-    osslsigncode verify -in $INSTALLER
+    $CODESIGN sign -pkcs12 $SIGNKEY -readpass $SIGNPSWD -n "Safe-T Bridge" -i "https://safe-t.io/" -h sha2 -t http://timestamp.digicert.com -in $INSTALLER.unsigned -out $INSTALLER
+    $CODESIGN verify -in $INSTALLER
 fi
+

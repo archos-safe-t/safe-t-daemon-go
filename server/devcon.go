@@ -59,6 +59,11 @@ func devconUsbStrings(dlogger *log.Logger) ([]string, []string, error) {
 		return nil, nil, err
 	}
 
+	allSafeTmini, err := devconUsbStringsVid(usb.VendorArchos, true, dlogger)
+	if err != nil {
+		return nil, nil, err
+	}
+
 	connT1, err := devconUsbStringsVid(usb.VendorT1, false, dlogger)
 	if err != nil {
 		return nil, nil, err
@@ -69,8 +74,13 @@ func devconUsbStrings(dlogger *log.Logger) ([]string, []string, error) {
 		return nil, nil, err
 	}
 
-	all := append(allT1, allT2...)
-	conn := append(connT1, connT2...)
+	connSafeTmini, err := devconUsbStringsVid(usb.VendorArchos, false, dlogger)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	all := append(allT1, allT2, allSafeTmini...)
+	conn := append(connT1, connT2, connSafeTmini...)
 
 	connMap := make(map[string]bool)
 	for _, i := range conn {

@@ -159,6 +159,13 @@ func makeStatusTemplateDevice(dev entry) statusTemplateDevice {
 			devType = typeT2Boot
 		}
 	}
+	if dev.Vendor == usb.VendorArchos {
+		if dev.Product == usb.ProductSafeTminiFirmware {
+			devType = typeSafeTmini
+		} else {
+			devType = typeSafeTminiBoot
+		}
+	}
 	var session string
 	if dev.Session != nil {
 		session = *dev.Session

@@ -8,6 +8,8 @@ const (
 	typeT1     statusTemplateDevType = 0
 	typeT2     statusTemplateDevType = 1
 	typeT2Boot statusTemplateDevType = 2
+	typeSafeTmini   statusTemplateDevType = 3
+	typeSafeTminiBoot   statusTemplateDevType = 4
 )
 
 type statusTemplateDevice struct {

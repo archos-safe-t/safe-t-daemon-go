@@ -87,7 +87,8 @@ func (b *HIDAPI) match(d *usbhid.HidDeviceInfo) bool {
 	pid := d.ProductID
 	trezor1 := vid == VendorT1 && (pid == ProductT1Firmware)
 	trezor2 := vid == VendorT2 && (pid == ProductT2Firmware || pid == ProductT2Bootloader)
-	return (trezor1 || trezor2) && (d.Interface == hidIfaceNum || d.UsagePage == hidUsagePage)
+	safetmini := vid == VendorArchos && (pid == ProductSafeTminiFirmware || pid == ProductSafeTminiBootloader)
+	return (trezor1 || trezor2 || safetmini) && (d.Interface == hidIfaceNum || d.UsagePage == hidUsagePage)
 }
 
 func (b *HIDAPI) identify(dev *usbhid.HidDeviceInfo) string {

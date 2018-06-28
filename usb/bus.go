@@ -12,6 +12,10 @@ const (
 	VendorT2            = 0x1209
 	ProductT2Bootloader = 0x53C0
 	ProductT2Firmware   = 0x53C1
+
+	VendorArchos               = 0x0E79
+	ProductSafeTminiBootloader = 0x6001
+	ProductSafeTminiFirmware   = 0x6000
 )
 
 var (

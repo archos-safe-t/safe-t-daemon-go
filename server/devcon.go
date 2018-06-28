@@ -79,8 +79,15 @@ func devconUsbStrings(dlogger *log.Logger) ([]string, []string, error) {
 		return nil, nil, err
 	}
 
-	all := append(allT1, allT2, allSafeTmini...)
-	conn := append(connT1, connT2, connSafeTmini...)
+	all := []string{}
+	all = append(all, allT1...)
+	all = append(all, allT2...)
+	all = append(all, allSafeTmini...)
+
+	conn := []string{}
+	conn = append(conn, connT1...)
+	conn = append(conn, connT2...)
+	conn = append(conn, connSafeTmini...)
 
 	connMap := make(map[string]bool)
 	for _, i := range conn {
